@@ -8,23 +8,14 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
-const SignUp = ({navigation}: any) => {
-  const [name, setName] = useState('');
+const Login = ({navigation}: any) => {
   const [email, setEmail] = useState('');
-  const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
   return (
     <View>
-      <Text style={{textAlign: 'center', marginVertical: 40}}>SignUp</Text>
-      <TextInput
-        placeholder="Enter name"
-        placeholderTextColor={'grey'}
-        style={styles.input}
-        value={name}
-        onChangeText={text => setName(text)}
-      />
+      <Text style={{textAlign: 'center', marginVertical: 40}}>Login</Text>
+
       <TextInput
         placeholder="Enter Email"
         placeholderTextColor={'grey'}
@@ -33,39 +24,26 @@ const SignUp = ({navigation}: any) => {
         onChangeText={text => setEmail(text)}
       />
       <TextInput
-        placeholder="Enter Phone Number"
-        placeholderTextColor={'grey'}
-        style={styles.input}
-        value={number}
-        onChangeText={text => setNumber(text)}
-      />
-      <TextInput
         placeholder="Password"
         placeholderTextColor={'grey'}
         style={styles.input}
         value={password}
         onChangeText={text => setPassword(text)}
       />
-      <TextInput
-        placeholder="Confirm Password"
-        placeholderTextColor={'grey'}
-        style={styles.input}
-        value={confirmPassword}
-        onChangeText={text => setConfirmPassword(text)}
-      />
+
       <TouchableOpacity style={styles.pressable}>
-        <Text style={styles.pressableText}>Sign Up</Text>
+        <Text style={styles.pressableText}>Login</Text>
       </TouchableOpacity>
       <Text
         style={{textAlign: 'center', fontSize: 20}}
-        onPress={() => navigation.navigate('Login')}>
+        onPress={() => navigation.navigate('SignUp')}>
         Login
       </Text>
     </View>
   );
 };
 
-export default SignUp;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {

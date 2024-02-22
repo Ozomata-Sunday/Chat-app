@@ -3,13 +3,13 @@ import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 const Splash = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     navigation.navigate('SignUp');
-  //   }, 2000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate('SignUp');
+    }, 2000);
+  }, []);
 
   return (
     <View style={styles.container}>
