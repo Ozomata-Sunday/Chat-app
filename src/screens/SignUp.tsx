@@ -5,8 +5,16 @@ import {
   Text,
   TouchableOpacity,
   View,
+  ToastAndroid,
+  ActivityIndicator,
+  Alert,
+  Keyboard,
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
+import uuid from 'react-native-uuid';
+
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const SignUp = ({navigation}: any) => {
   const [name, setName] = useState('');
@@ -14,6 +22,50 @@ const SignUp = ({navigation}: any) => {
   const [number, setNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [spin, setSpin] = useState(false);
+
+  const SignUp = async () => {
+    if (!email || !password || !name) {
+      ToastAndroid.show('Enter Name, Email, & password', ToastAndroid.LONG);
+      console.log('Enter Name, Email, & password');
+      Keyboard.dismiss();
+    }
+    if (password !== confirmPassword) {
+      ToastAndroid.show('Confirm Password', ToastAndroid.LONG);
+      console.log('Confirm Password');
+      Keyboard.dismiss();
+    } else {
+      try {
+        Keyboard.dismiss();
+        setSpin(true);
+        const userCredential = await auth().createUserWithEmailAndPassword(
+          email,
+          password,
+        );
+        await userCredential.user?.updateProfile({
+          displayName: name,
+        });
+        addUser();
+        console.log('User account created successfully');
+        navigation.navigate('Login');
+      } catch (error: any) {
+        Alert.alert('Error', error.message);
+        console.error('Error during user registration:', error);
+      } finally {
+        setSpin(false);
+      }
+    }
+  };
+
+  const addUser = () => {
+    const uuId = uuid.v4();
+    firestore().collection('users').doc(uuId).set({
+      name: name,
+      email: email,
+      number: number,
+      userId: uuId,
+    });
+  };
 
   return (
     <View>
@@ -53,8 +105,12 @@ const SignUp = ({navigation}: any) => {
         value={confirmPassword}
         onChangeText={text => setConfirmPassword(text)}
       />
-      <TouchableOpacity style={styles.pressable}>
-        <Text style={styles.pressableText}>Sign Up</Text>
+      <TouchableOpacity style={styles.pressable} onPress={SignUp}>
+        {spin ? (
+          <ActivityIndicator size={20} color={'black'} />
+        ) : (
+          <Text style={styles.pressableText}>Sign Up</Text>
+        )}
       </TouchableOpacity>
       <Text
         style={{textAlign: 'center', fontSize: 20}}

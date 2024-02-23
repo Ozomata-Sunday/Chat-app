@@ -1,16 +1,43 @@
 import React, {useState} from 'react';
 import {
-  Pressable,
+  ActivityIndicator,
   StyleSheet,
   Text,
+  Alert,
   TouchableOpacity,
   View,
+  ToastAndroid,
+  Keyboard,
 } from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
+
+import auth from '@react-native-firebase/auth';
 
 const Login = ({navigation}: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [spin, setSpin] = useState(false);
+
+  const HandleLogin = async () => {
+    if (!email || !password) {
+      ToastAndroid.show('Enter Email & password', ToastAndroid.LONG);
+      console.log('Enter Email & password');
+      Keyboard.dismiss();
+    } else {
+      try {
+        setSpin(true);
+        Keyboard.dismiss();
+        await auth().signInWithEmailAndPassword(email, password);
+        console.log('User logged in successfully');
+        navigation.navigate('Home');
+      } catch (error: any) {
+        Alert.alert('Error', error.message);
+        console.error('Error during login:', error);
+      } finally {
+        setSpin(false);
+      }
+    }
+  };
 
   return (
     <View>
@@ -31,8 +58,12 @@ const Login = ({navigation}: any) => {
         onChangeText={text => setPassword(text)}
       />
 
-      <TouchableOpacity style={styles.pressable}>
-        <Text style={styles.pressableText}>Login</Text>
+      <TouchableOpacity style={styles.pressable} onPress={HandleLogin}>
+        {spin ? (
+          <ActivityIndicator size={20} color={'black'} />
+        ) : (
+          <Text style={styles.pressableText}>Login</Text>
+        )}
       </TouchableOpacity>
       <Text
         style={{textAlign: 'center', fontSize: 20}}

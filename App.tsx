@@ -5,7 +5,7 @@ import Navigation from './src/Navigator/Navigation';
 import Splash from './src/screens/Splash';
 
 const App = () => {
-  return <Splash />;
+  return <Navigation />;
 };
 
 export default App;
