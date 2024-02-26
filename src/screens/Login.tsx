@@ -68,7 +68,7 @@ const Login = ({navigation}: any) => {
       <Text
         style={{textAlign: 'center', fontSize: 20}}
         onPress={() => navigation.navigate('SignUp')}>
-        Login
+        Sign Up
       </Text>
     </View>
   );

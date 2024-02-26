@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FlatList} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 
+let id: '';
+
 const Users = () => {
   const [user, setUser] = useState([]);
+  const active = auth().currentUser?.uid;
+  // console.log(active);
 
   const navigation = useNavigation();
 
@@ -17,13 +22,16 @@ const Users = () => {
 
   const getUser = async () => {
     const tempData = [];
-    const email = await AsyncStorage.getItem('Email');
+    // console.log(tempData);
+    const email = await AsyncStorage.getItem('EMAIL');
+    // console.log(email)
+
     firestore()
       .collection('users')
       .where('email', '!=', email)
       .get()
       .then(res => {
-        if (res.doc != []) {
+        if (res.docs != null) {
           res.docs.map(item => {
             tempData.push(item.data());
           });
@@ -40,7 +48,7 @@ const Users = () => {
             <TouchableOpacity
               style={styles.userItem}
               onPress={() => {
-                navigation.navigate('Chat', {data: item});
+                navigation.navigate('Chat', {data: item, id: active});
               }}>
               <Image
                 source={require('../assets/profile.png')}

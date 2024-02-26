@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { GiftedChat } from 'react-native-gifted-chat'
 
-const Chat = () => {
+const Chat = ({ route }) => {
+    console.log(route.params)
     const [messages, setMessages] = useState([])
 
     useEffect(() => {
@@ -31,13 +32,13 @@ const Chat = () => {
                 messages={messages}
                 onSend={messages => onSend(messages)}
                 user={{
-                    _id: 1,
+                    _id: route.params.id,
                 }}
             />
         </View>
     )
 }
 
-export default Chat
 
 const styles = StyleSheet.create({})
+export default Chat
