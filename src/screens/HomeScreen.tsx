@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Image, StyleSheet, Text, View} from 'react-native';
+import {Button, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -23,28 +23,26 @@ const HomeScreen = ({navigation}: any) => {
 
   return (
     <View style={styles.container}>
-      <Button title="LogOut" onPress={Logout} />
-      {selectTab == 0 ? <Users /> : <Setting />}
-      <View style={styles.bottomTab}>
-        <TouchableOpacity style={styles.tab} onPress={() => setSelectedTab(0)}>
-          <Image
-            source={require('../assets/group.png')}
-            style={[
-              styles.tabBarIcon,
-              {tintColor: selectTab == 0 ? 'white' : 'gray'},
-            ]}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tab} onPress={() => setSelectedTab(1)}>
-          <Image
-            source={require('../assets/settings.png')}
-            style={[
-              styles.tabBarIcon,
-              {tintColor: selectTab == 1 ? 'white' : 'gray'},
-            ]}
-          />
-        </TouchableOpacity>
+      <View style={styles.topView}>
+        <View style={styles.profile}>
+          <Text
+            style={{
+              fontStyle: 'italic',
+              fontSize: 30,
+              fontWeight: 'bold',
+              color: 'pink',
+            }}>
+            Chat App
+          </Text>
+          <Pressable onPress={Logout}>
+            <Image
+              source={require('../assets/logout.png')}
+              style={{width: 20, height: 20}}
+            />
+          </Pressable>
+        </View>
       </View>
+      <Users />
     </View>
   );
 };
@@ -54,12 +52,26 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  topView: {
+    backgroundColor: 'grey',
+    height: '15%',
+    width: '100%',
+    borderBottomEndRadius: 50,
+    padding: 10,
+  },
+  profile: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    // marginHorizontal: 10,
+    elevation: 10,
+    marginVertical: 20,
+  },
   bottomTab: {
     position: 'absolute',
     bottom: 0,
     width: '100%',
     height: 60,
-    backgroundColor: 'pink',
+    backgroundColor: 'grey',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

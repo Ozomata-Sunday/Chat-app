@@ -41,7 +41,16 @@ const Login = ({navigation}: any) => {
 
   return (
     <View>
-      <Text style={{textAlign: 'center', marginVertical: 40}}>Login</Text>
+      <Text
+        style={{
+          textAlign: 'center',
+          marginVertical: 40,
+          fontSize: 23,
+          fontStyle: 'italic',
+          fontWeight: 'bold',
+        }}>
+        Login
+      </Text>
 
       <TextInput
         placeholder="Enter Email"
@@ -55,6 +64,7 @@ const Login = ({navigation}: any) => {
         placeholderTextColor={'grey'}
         style={styles.input}
         value={password}
+        secureTextEntry = {true}
         onChangeText={text => setPassword(text)}
       />
 

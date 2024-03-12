@@ -37,6 +37,7 @@ const Users = () => {
           });
         }
         setUser(tempData);
+        // console.log(user.userId)
       });
   };
   return (
@@ -47,9 +48,9 @@ const Users = () => {
           return (
             <TouchableOpacity
               style={styles.userItem}
-              onPress={() => {
-                navigation.navigate('Chat', {data: item, id: active});
-              }}>
+              onPress={() =>
+                navigation.navigate('Chat', {data: item, id: active})
+              }>
               <Image
                 source={require('../assets/profile.png')}
                 style={styles.icon}
@@ -62,8 +63,6 @@ const Users = () => {
     </View>
   );
 };
-
-export default Users;
 
 const styles = StyleSheet.create({
   container: {
@@ -92,3 +91,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 });
+
+export default Users;

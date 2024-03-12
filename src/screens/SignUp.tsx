@@ -69,7 +69,16 @@ const SignUp = ({navigation}: any) => {
 
   return (
     <View>
-      <Text style={{textAlign: 'center', marginVertical: 40}}>SignUp</Text>
+      <Text
+        style={{
+          textAlign: 'center',
+          marginVertical: 40,
+          fontSize: 23,
+          fontStyle: 'italic',
+          fontWeight: 'bold',
+        }}>
+        SignUp
+      </Text>
       <TextInput
         placeholder="Enter name"
         placeholderTextColor={'grey'}
